@@ -95,9 +95,11 @@ while True:
                     print(f"Yeni Kullanici ID: {id}")
                     previous_id = id  # Update the previous ID
                     id_not_found = True  # Reset the flag when a new face is detected
-
+                    texttospeakpath=f"Voices/{id}.mp3"
+                    pygame.mixer.music.load(texttospeakpath)
+                    pygame.mixer.music.play()
+                      
         
-
             else:
                 y1, x2, y2, x1 = faceLoc
                 y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
