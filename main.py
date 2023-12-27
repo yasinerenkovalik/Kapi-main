@@ -49,8 +49,7 @@ encodeListKnown, studentIds = encodeListKnownWithIds
 print("Encode Dosyası Yüklendi")
 
 counter = 0
-exit_button = (650, 150, 50, 25)
-exit_button_color = (255, 0, 0)  # Default color is red
+
 id_printed = False  # Flag to track if the ID has been printed
 
 # ... (Previous code remains unchanged)
@@ -74,7 +73,7 @@ while True:
     faceCurFrame = face_recognition.face_locations(imgS)
     encodeCurFrame = face_recognition.face_encodings(imgS, faceCurFrame)
 
-    imgBackground[162:162 + 480, 55:55 + 640] = img
+    imgBackground[162:162 + 480, 100:100 + 640] = img
 
     if faceCurFrame:
         for encodeFace, faceLoc in zip(encodeCurFrame, faceCurFrame):
@@ -86,14 +85,14 @@ while True:
             if matches[matchIndex]:
                 y1, x2, y2, x1 = faceLoc
                 y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                bbox = 55 + x1, 162 + y1, x2 - x1, y2 - y1
+                bbox = 100 + x1, 162 + y1, x2 - x1, y2 - y1
                 bbox_color = (0, 255, 0)  # Green color for recognized face
                 cv2.rectangle(imgBackground, (int(bbox[0]), int(bbox[1])), (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3])), bbox_color, 2)
 
                 id = studentIds[matchIndex]
 
                 if id != previous_id:  # Check if the ID has changed
-                    print(f"Yeni Kullanıcı ID: {id}")
+                    print(f"Yeni Kullanici ID: {id}")
                     previous_id = id  # Update the previous ID
                     id_not_found = True  # Reset the flag when a new face is detected
 
@@ -105,20 +104,20 @@ while True:
                 bbox = 55 + x1, 162 + y1, x2 - x1, y2 - x1
                 bbox_color = (0, 0, 255)  # Red color for unrecognized face
                 cv2.rectangle(imgBackground, (int(bbox[0]), int(bbox[1])), (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3])), bbox_color, 2)
+            
 
                 if not id_printed and id_not_found:
-                    print("Kullanıcı Bulunamadı")
+                    print("Kullanici Bulunamadi")
                     id_printed = True
                     pygame.mixer.music.load(sound_file_path)
                     pygame.mixer.music.play()
+                    previous_id=-1
                     id_not_found = False  # Set the flag to False to indicate that the message has been printed
 
                 # Reset the flag when a new face is detected
                 id_printed = False
 
-    cv2.rectangle(imgBackground, exit_button, exit_button_color, cv2.FILLED)
-    cv2.putText(imgBackground, "ÇIKIS", (exit_button[0] + 10, exit_button[1] + 20),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
 
     cv2.imshow("Face Attendance", imgBackground)
     cv2.waitKey(1)
