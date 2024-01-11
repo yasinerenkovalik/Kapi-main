@@ -17,6 +17,7 @@ class AnaPencere(QWidget):
         buton1.clicked.connect(self.proje_ac)
         buton2.clicked.connect(self.pencere2_ac)
 
+
         # Dikey bir düzen oluştur
         vbox = QVBoxLayout()
         vbox.addWidget(buton1)
@@ -30,13 +31,17 @@ class AnaPencere(QWidget):
         self.setWindowTitle('Ana Pencere')
         self.show()
 
+
     def proje_ac(self):
         # main.py dosyasını çalıştır
         Popen(['python', 'start_ui.py'])
 
+
+
     def pencere2_ac(self):
         # Pencere 2'nin olduğu sınıfı oluştur ve göster
         Popen(['python', 'register.py'])
+        self.close()
 
 class Pencere2(QWidget):
     def __init__(self):
